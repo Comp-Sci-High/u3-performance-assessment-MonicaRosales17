@@ -6,7 +6,7 @@ const albums = {
     sunsetSeason: [
     {
     title: "Idle Town",
-    duration: "3 minutes and 57 seconds",
+    duration: "3:57",
     dateReleased: "March 19, 2017"
     },
     {
@@ -225,15 +225,52 @@ const albums = {
     
 app.use((req, res, next) => {
     console.log(req.method + " " + req.url)
+    next()
 })
 
 app.get("/", (req, res) => {
-    res.status(200).send(`<h1>Welcome to the Conan Gray API!</h1>`);
+    res.status(200).send(`<h1>Welcome to the Conan Gray API!</h1> <h2>Go to /docs to figure out everything you can request!</h2>`)
 });
 
+app.get("/docs", (req, res) => {
+    res.status(200).send(`<h2>Go to /sunsetseason to get all the songs and info and to get a specific song you can go to /albums/sunsetseason/# and replace the # with any number from 0-4</h2> <h2>Go to /kidkrow to get all the songs and info and to get a specific song you can go to /albums/kidkrow/# and replace the # with any number from 0-11</h2> <h2>Go to /superache to get all the songs and info and to get a specific song you can go to /albums/superache/# and replace the # with any number from 0-11</h2> <h2>Go to /foundheaven to get all the songs and info and to get a specific song you can go to /albums/foundheaven/# and replace the # with any number from 0-12</h2>`)
+});
 
+app.get("/albums/sunsetseason/:id", (req, res) =>{
+    const id = req.params.id
+    res.status(200).json(albums.sunsetSeason[id])
+})
 
+app.get("/albums/kidkrow/:id", (req, res) =>{
+    const id = req.params.id
+    res.status(200).json(albums.kidKrow[id])
+})
 
+app.get("/albums/superache/:id", (req, res) =>{
+    const id = req.params.id
+    res.status(200).json(albums.superache[id])
+})
+
+app.get("/albums/foundheaven/:id", (req, res) =>{
+    const id = req.params.id
+    res.status(200).json(albums.foundHeaven[id])
+})
+
+app.get("/sunsetseason", (req, res) => {
+    res.status(200).json(albums.sunsetSeason)
+})
+
+app.get("/kidkrow", (req, res) => {
+    res.status(200).json(albums.kidKrow)
+})
+
+app.get("/superache", (req, res) => {
+    res.status(200).json(albums.superache)
+})
+
+app.get("/foundheaven", (req, res) => {
+    res.status(200).json(albums.foundHeaven)
+})
 
 app.use((req, res, next) =>{
     res.status(404).send("404 NOT FOUND")
